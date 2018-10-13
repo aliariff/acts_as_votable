@@ -5,8 +5,8 @@ module ActsAsVotable
     def self.included(base)
       # allow user to define these
       aliases = {
-        vote_up_for: [:likes, :upvotes, :up_votes],
-        vote_down_for: [:dislikes, :downvotes, :down_votes],
+        vote_up_for: [:likes, :upvotes, :up_votes, :vote_wise_for],
+        vote_down_for: [:dislikes, :downvotes, :down_votes, :vote_provocative_for],
         unvote_for: [:unlike, :undislike],
         voted_on?: [:voted_for?],
         voted_up_on?: [:voted_up_for?, :liked?],
@@ -44,6 +44,10 @@ module ActsAsVotable
 
     def vote_down_for(model = nil, args = {})
       vote votable: model, vote_scope: args[:vote_scope], vote: false
+    end
+
+    def vote_neutral_for(model = nil, args = {})
+      vote votable: model, vote_scope: args[:vote_scope], vote: "neutral"
     end
 
     def unvote_for(model, args = {})

@@ -23,11 +23,21 @@ module ActsAsVotable::Helpers
       ["down", "downvote", "dislike", "disliked", "negative", "no", "bad", "disagree", "false", 0, false]
     end
 
+    def self.that_mean_neutral
+      ["neutral", "normal", "standard"]
+    end
+
     # check is word is a true or bad vote
     # if the word is unknown, then it counts it as a true/good
     # vote.  this exists to allow all voting to be good by default
     def self.meaning_of(word)
-      !that_mean_false.include?(word)
+      if that_mean_false.include?(word)
+        :negative
+      elsif that_mean_neutral.include?(word)
+        :neutral
+      else
+        :positive
+      end
     end
   end
 end

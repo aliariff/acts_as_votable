@@ -59,13 +59,13 @@ module ActsAsVotable
 
     def voted_up_on?(votable, args = {})
       votes = find_votes(votable_id: votable.id, votable_type: votable.class.base_class.name,
-                         vote_scope: args[:vote_scope], vote_flag: true)
+                         vote_scope: args[:vote_scope], vote_flag: :positive)
       votes.size > 0
     end
 
     def voted_down_on?(votable, args = {})
       votes = find_votes(votable_id: votable.id, votable_type: votable.class.base_class.name,
-                         vote_scope: args[:vote_scope], vote_flag: false)
+                         vote_scope: args[:vote_scope], vote_flag: :negative)
       votes.size > 0
     end
 
@@ -81,11 +81,11 @@ module ActsAsVotable
     end
 
     def find_up_votes(args = {})
-      find_votes vote_flag: true, vote_scope: args[:vote_scope]
+      find_votes vote_flag: :positive, vote_scope: args[:vote_scope]
     end
 
     def find_down_votes(args = {})
-      find_votes vote_flag: false, vote_scope: args[:vote_scope]
+      find_votes vote_flag: :negative, vote_scope: args[:vote_scope]
     end
 
     def find_votes_for_class(klass, extra_conditions = {})
@@ -93,11 +93,11 @@ module ActsAsVotable
     end
 
     def find_up_votes_for_class(klass, args = {})
-      find_votes_for_class klass, vote_flag: true, vote_scope: args[:vote_scope]
+      find_votes_for_class klass, vote_flag: :positive, vote_scope: args[:vote_scope]
     end
 
     def find_down_votes_for_class(klass, args = {})
-      find_votes_for_class klass, vote_flag: false, vote_scope: args[:vote_scope]
+      find_votes_for_class klass, vote_flag: :negative, vote_scope: args[:vote_scope]
     end
 
     # Including polymporphic relations for eager loading
@@ -111,11 +111,11 @@ module ActsAsVotable
     end
 
     def find_up_voted_items(extra_conditions = {})
-      find_voted_items extra_conditions.merge(vote_flag: true)
+      find_voted_items extra_conditions.merge(vote_flag: :positive)
     end
 
     def find_down_voted_items(extra_conditions = {})
-      find_voted_items extra_conditions.merge(vote_flag: false)
+      find_voted_items extra_conditions.merge(vote_flag: :negative)
     end
 
     def get_voted(klass, extra_conditions = {})

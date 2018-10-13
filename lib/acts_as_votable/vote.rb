@@ -16,12 +16,14 @@ module ActsAsVotable
     belongs_to :votable, polymorphic: true
     belongs_to :voter, polymorphic: true
 
-    scope :up, -> { where(vote_flag: true) }
-    scope :down, -> { where(vote_flag: false) }
+    scope :up, -> { where(vote_flag: :positive) }
+    scope :down, -> { where(vote_flag: :negative) }
     scope :for_type, ->(klass) { where(votable_type: klass.to_s) }
     scope :by_type, ->(klass) { where(voter_type: klass.to_s) }
 
     validates_presence_of :votable_id
     validates_presence_of :voter_id
+
+    enum vote_flag: [:positive, :neutral, :negative]
   end
 end

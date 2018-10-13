@@ -141,12 +141,17 @@ module ActsAsVotable
 
     def get_up_votes(options = {})
       vote_scope_hash = scope_or_empty_hash(options[:vote_scope])
-      find_votes_for({ vote_flag: true }.merge(vote_scope_hash))
+      find_votes_for({ vote_flag: :positive }.merge(vote_scope_hash))
     end
 
     def get_down_votes(options = {})
       vote_scope_hash = scope_or_empty_hash(options[:vote_scope])
-      find_votes_for({ vote_flag: false }.merge(vote_scope_hash))
+      find_votes_for({ vote_flag: :negative }.merge(vote_scope_hash))
+    end
+
+    def get_neutral_votes(options = {})
+      vote_scope_hash = scope_or_empty_hash(options[:vote_scope])
+      find_votes_for({ vote_flag: :neutral }.merge(vote_scope_hash))
     end
 
     # voters
@@ -157,14 +162,21 @@ module ActsAsVotable
 
     def voted_up_by?(voter)
       votes = find_votes_for(voter_id: voter.id,
-                             vote_flag: true,
+                             vote_flag: :positive,
                              voter_type: voter.class.base_class.name)
       votes.count > 0
     end
 
     def voted_down_by?(voter)
       votes = find_votes_for(voter_id: voter.id,
-                             vote_flag: false,
+                             vote_flag: :negative,
+                             voter_type: voter.class.base_class.name)
+      votes.count > 0
+    end
+
+    def voted_neutral_by?(voter)
+      votes = find_votes_for(voter_id: voter.id,
+                             vote_flag: :neutral,
                              voter_type: voter.class.base_class.name)
       votes.count > 0
     end

@@ -18,7 +18,7 @@ ActiveRecord::Schema.define(version: 1) do
     t.references :votable, polymorphic: true
     t.references :voter, polymorphic: true
 
-    t.boolean :vote_flag
+    t.integer :vote_flag
     t.string :vote_scope
     t.integer :vote_weight
 

@@ -11,8 +11,6 @@ before_install:
   - gem update --system
 
 gemfile:
-  - gemfiles/rails_4.gemfile
   - gemfiles/rails_5.gemfile
   - gemfiles/rails_5_1.gemfile
   - gemfiles/rails_5_2.gemfile
-

@@ -11,13 +11,14 @@ The main goals of this gem are:
 - Allow any model to vote.  In other words, votes do not have to come from a user,
   they can come from any model (such as a Group or Team).
 - Provide an easy to write/read syntax.
+- **New** Allow vote with 3 values (positive, negative, neutral)
 
 ## Installation
 
 ### Supported Ruby and Rails versions
 
 * Ruby >= 2.3.0
-* Rails >= 4
+* Rails >= 5
 
 ### Install
 

@@ -25,23 +25,23 @@ shared_examples "a voter_model" do
 
   it "should be voted as true when a voter has voted true" do
     votable.vote_by voter: voter
-    expect(voter.voted_as_when_voted_on(votable)).to be true
-    expect(voter.voted_as_when_voted_for(votable)).to be true
+    expect(voter.voted_as_when_voted_on(votable)).to eq 'positive'
+    expect(voter.voted_as_when_voted_for(votable)).to eq 'positive'
   end
 
   it "should be voted as true when a voter has voted true under scope" do
     votable.vote_by voter: voter, vote_scope: "rank"
-    expect(voter.voted_as_when_voted_for(votable, vote_scope: "rank")).to be true
+    expect(voter.voted_as_when_voted_for(votable, vote_scope: "rank")).to eq 'positive'
   end
 
   it "should be voted as false when a voter has voted false" do
     votable.vote_by voter: voter, vote: false
-    expect(voter.voted_as_when_voted_for(votable)).to be false
+    expect(voter.voted_as_when_voted_for(votable)).to eq 'negative'
   end
 
   it "should be voted as false when a voter has voted false under scope" do
     votable.vote_by voter: voter, vote: false, vote_scope: "rank"
-    expect(voter.voted_as_when_voted_for(votable, vote_scope: "rank")).to be false
+    expect(voter.voted_as_when_voted_for(votable, vote_scope: "rank")).to eq 'negative'
   end
 
   it "should be voted as nil when a voter has never voted" do
@@ -75,7 +75,7 @@ shared_examples "a voter_model" do
 
   it "should provide reserve functionality, voter can vote on votable" do
     voter.vote votable: votable, vote: "bad"
-    expect(voter.voted_as_when_voting_on(votable)).to be false
+    expect(voter.voted_as_when_voting_on(votable)).to eq 'negative'
   end
 
   it "should allow the voter to vote up a model" do
@@ -140,7 +140,7 @@ shared_examples "a voter_model" do
     voter.vote votable: votable, vote: false
     voter2.vote votable: votable
 
-    expect(voter.voted_as_when_voting_on(votable)).to be false
+    expect(voter.voted_as_when_voting_on(votable)).to eq 'negative'
   end
 
   describe "#find_voted_items" do

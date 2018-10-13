@@ -14,14 +14,18 @@ describe ActsAsVotable::Helpers::Words do
   end
 
   it "should be a vote for true when word is good" do
-    expect(vote.votable_words.meaning_of("good")).to be true
+    expect(vote.votable_words.meaning_of("good")).to eq :positive
   end
 
   it "should be a vote for false when word is down" do
-    expect(vote.votable_words.meaning_of("down")).to be false
+    expect(vote.votable_words.meaning_of("down")).to eq :negative
+  end
+
+  it "should be a vote for neutral when word is neutral" do
+    expect(vote.votable_words.meaning_of("neutral")).to eq :neutral
   end
 
   it "should be a vote for true when the word is unknown" do
-    expect(vote.votable_words.meaning_of("lsdhklkadhfs")).to be true
+    expect(vote.votable_words.meaning_of("lsdhklkadhfs")).to eq :positive
   end
 end
